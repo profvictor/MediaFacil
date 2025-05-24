@@ -1,6 +1,6 @@
 {
-  "name": "Calculadora de Notas",
-  "short_name": "CalcNotas",
+  "name": "Média Fácil",
+  "short_name": "Média Fácil",
   "description": "Aplicativo para calcular notas escolares",
   "start_url": "/index.html",
   "display": "standalone",
