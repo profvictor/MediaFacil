@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="description" content="Calculadora de notas escolares">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <title>Calculadora</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #E8D5FF 0%, #D4BFFF 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            margin: 0;
+        }
+
+        .container {
+            background: #FFFFFF;
+            border-radius: 32px;
+            padding: 32px 24px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding-bottom: 72px; /* Espaço para o botão sobreposto */
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #6D28D9;
+            margin-bottom: 4px;
+            animation: slideDown 0.6s ease-out forwards;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #9CA3AF;
+            margin-bottom: 24px;
+            animation: slideDown 0.6s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .image-container {
+            background-color: #672CBC;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 350px;
+            height: 540px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 48px; /* Esta margem é importante para o cálculo */
+            position: relative;
+            animation: scaleIn 0.8s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        .image-container img {
+            width: 90%; /* Ajustar tamanho da imagem */
+            height: auto; /* Manter proporção */
+            object-fit: contain; /* Garantir que a imagem caiba */
+        }
+
+        .start-button {
+            background-color: #F9B091;
+            color: #FFFFFF;
+            font-size: 27px;
+            font-weight: 600;
+            padding: 24px 60px;
+            border: none;
+            border-radius: 45px;
+            cursor: pointer;
+            position: relative;
+            /* Ajuste aqui: de -200px para -85.5px (ou -85px/-86px para arredondar) */
+            margin-top: -85.5px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            animation: scaleIn 0.8s ease-out 0.6s forwards;
+            opacity: 0;
+            z-index: 1; /* Garante que o botão fique sobre outros elementos se necessário */
+        }
+
+        .start-button:hover {
+            background-color: #F59E0B;
+        }
+
+        /* Responsividade básica */
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px 16px;
+                padding-bottom: 72px; /* Manter padding para o botão */
+                border-radius: 24px;
+            }
+
+            h1 {
+                font-size: 36px; /* No original estava 36px, mantive */
+            }
+
+            .subtitle {
+                font-size: 24px;
+                margin-bottom: 24px;
+            }
+            
+            .image-container {
+                height: 480px;
+            }
+
+            .start-button {
+                font-size: 24px;
+                padding: 21px 45px;
+                border-radius: 35px;
+                /* Se a altura do botão mudar, o margin-top também precisará de ajuste proporcional.
+                   Nova altura aproximada: (2*21) + 24 = 66px. Metade = 33px.
+                   Novo margin-top: -(48px + 33px) = -81px.
+                   Vamos recalcular com precisão para o @media query se necessário,
+                   ou manter o mesmo nível de sobreposição visualmente.
+                   Por simplicidade, se o design visual do overlap não precisar ser exato
+                   pixel a pixel em telas menores, -85.5px pode ainda funcionar bem.
+                   Ou você pode ajustar especificamente:
+                   Ex: margin-top: -81px; (se a margin-bottom do image-container permanecer 48px)
+                */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Média Fácil</h1>
+        <p class="subtitle">Prof. Victor</p>
+
+        <div class="image-container">
+            <img src="livro.png" alt="Livro aberto">
+        </div>
+
+        <a href="home.html" style="text-decoration: none;">
+            <button class="start-button">Iniciar</button>
+        </a>
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado com sucesso:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Falha ao registrar o ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

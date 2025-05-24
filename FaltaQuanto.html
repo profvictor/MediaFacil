@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falta quanto? - Calculadora de Média</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #E8D5FF 0%, #D4BFFF 100%);
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: max(16px, env(safe-area-inset-top, 16px)) max(16px, env(safe-area-inset-right, 16px)) max(16px, env(safe-area-inset-bottom, 16px)) max(16px, env(safe-area-inset-left, 16px));
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #FFFFFF;
+            border-radius: 32px;
+            padding: 0;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .header {
+            padding: 24px 24px 32px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-icon {
+            width: 24px;
+            height: 24px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .back-icon:hover {
+            color: #8B5CF6;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #8B5CF6;
+            margin: 0;
+        }
+
+        .content {
+            padding: 0 24px 24px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .calculator-card {
+            background: linear-gradient(135deg, #C084FC 0%, #8B5CF6 100%);
+            border-radius: 24px;
+            padding: 32px 24px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .calculator-card:hover::before {
+            left: 100%;
+        }
+
+        .graduation-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px auto;
+            opacity: 0.9;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .bimesters-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .bimester-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bimester-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1F2937;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .grade-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            padding: 16px 20px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #8B5CF6;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .grade-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.02);
+        }
+
+        .grade-input::placeholder {
+            color: #C084FC;
+            opacity: 0.8;
+        }
+
+        .average-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .average-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 12px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .average-display {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 24px;
+            font-size: 48px;
+            font-weight: 700;
+            color: #8B5CF6;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #FBD38D 0%, #F6AD55 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 18px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .result-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .result-text {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-size: 24px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animações de entrada */
+        .calculator-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .illustration {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px 24px 0 24px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s ease forwards;
+            animation-delay: 0.1s;
+        }
+
+        .main-card {
+            background: #FFFFFF;
+            margin: 0 24px 24px 24px;
+            border-radius: 24px;
+            padding: 32px 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.6s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: max(12px, env(safe-area-inset-top, 12px)) max(12px, env(safe-area-inset-right, 12px)) max(12px, env(safe-area-inset-bottom, 12px)) max(12px, env(safe-area-inset-left, 12px));
+            }
+            
+            .container {
+                border-radius: 24px;
+                min-height: calc(100vh - 24px);
+                min-height: calc(100dvh - 24px);
+                max-width: none;
+                width: 100%;
+            }
+            
+            .header {
+                padding: 20px 20px 24px 20px;
+            }
+            
+            .content {
+                padding: 0 20px;
+            }
+            
+            .calculator-card {
+                padding: 24px 20px;
+            }
+            
+            .average-display {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                padding: max(8px, env(safe-area-inset-top, 8px)) max(8px, env(safe-area-inset-right, 8px)) max(8px, env(safe-area-inset-bottom, 8px)) max(8px, env(safe-area-inset-left, 8px));
+            }
+            
+            .container {
+                min-height: calc(100vh - 16px);
+                min-height: calc(100dvh - 16px);
+                border-radius: 20px;
+            }
+            
+            .header {
+                padding: 16px 16px 20px 16px;
+            }
+            
+            .content {
+                padding: 0 16px;
+            }
+            
+            .calculator-card {
+                padding: 20px 16px;
+            }
+            
+            .average-display {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="goBack()">
+                <path d="M19 12H5"/>
+                <path d="M12 19l-7-7 7-7"/>
+            </svg>
+            <h1>Falta quanto?</h1>
+        </div>
+        
+        <div class="content">
+            <div class="calculator-card">
+                <svg class="graduation-icon" viewBox="0 0 48 48" fill="currentColor">
+                    <path d="M24 6L4 18l8 4.36v9.28L24 38l12-6.36v-9.28L44 18L24 6zm12.82 12L24 24.72 11.18 18 24 11.28 36.82 18zM34 25.99l-10 5.46-10-5.46v-7.44L24 24l10-5.45v7.44z"/>
+                </svg>
+                
+                <div class="bimesters-section">
+                    <div class="bimester-group">
+                        <label class="bimester-label">1° bimestre:</label>
+                        <input type="number" class="grade-input" id="bim1" placeholder="0 a 10" min="0" max="10" step="0.1">
+                    </div>
+                    
+                    <div class="bimester-group">
+                        <label class="bimester-label">2° bimestre:</label>
+                        <input type="number" class="grade-input" id="bim2" placeholder="0 a 10" min="0" max="10" step="0.1">
+                    </div>
+                    
+                    <div class="bimester-group">
+                        <label class="bimester-label">3° bimestre:</label>
+                        <input type="number" class="grade-input" id="bim3" placeholder="0 a 10" min="0" max="10" step="0.1">
+                    </div>
+                </div>
+                
+                <div class="average-section">
+                    <div class="average-label">Média necessária para o 4° bimestre:</div>
+                    <div class="average-display" id="result">0.0</div>
+                    <button class="calculate-btn" onclick="calculateAverage()">Calcular</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateAverage() {
+            const bim1 = parseFloat(document.getElementById('bim1').value) || 0;
+            const bim2 = parseFloat(document.getElementById('bim2').value) || 0;
+            const bim3 = parseFloat(document.getElementById('bim3').value) || 0;
+            
+            // Média necessária para passar (assumindo que é 6.0)
+            const mediaMinima = 6.0;
+            
+            // Cálculo: (bim1 + bim2 + bim3 + bim4) / 4 = 6
+            // Portanto: bim4 = (6 * 4) - (bim1 + bim2 + bim3)
+            const necessaria = (mediaMinima * 4) - (bim1 + bim2 + bim3);
+            
+            const result = Math.max(0, necessaria);
+            const resultElement = document.getElementById('result');
+            
+            // Atualizar o display principal
+            resultElement.textContent = result.toFixed(1);
+            
+            // Atualizar a cor baseado no resultado
+            if (result > 10) {
+                resultElement.textContent = 'Impossível';
+                resultElement.style.color = '#EF4444';
+            } else if (result <= 0) {
+                resultElement.textContent = '🎉 Aprovado!';
+                resultElement.style.color = '#10B981';
+            } else {
+                resultElement.style.color = '#F59E0B';
+            }
+            
+            // Animação do botão
+            const btn = document.querySelector('.calculate-btn');
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                btn.style.transform = '';
+            }, 150);
+        }
+        
+        function goBack() {
+            window.location.href = 'home.html';
+        }
+        
+        // Calcular automaticamente quando o usuário digita
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.grade-input');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    // Validar entrada
+                    let value = parseFloat(this.value);
+                    if (value > 10) {
+                        this.value = 10;
+                    } else if (value < 0) {
+                        this.value = 0;
+                    }
+                });
+            });
+        });
+        
+        // Animação de entrada da página
+        window.addEventListener('load', function() {
+            const header = document.querySelector('.header h1');
+            header.style.opacity = '0';
+            header.style.transform = 'translateY(10px)';
+            header.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            
+            setTimeout(() => {
+                header.style.opacity = '1';
+                header.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
