@@ -8,7 +8,7 @@
   "theme_color": "#D4BFFF",
   "icons": [
     {
-      "src": "icons/icon.svg",
+      "src": "windows11/Square150x150Logo.scale-400.png",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
