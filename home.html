@@ -1,431 +1,339 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início - Seleção de Série</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Início - Seleção de Série</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #E8D5FF 0%, #D4BFFF 100%);
-            min-height: 100vh;
-            min-height: 100dvh; /* Para dispositivos com barras de navegação dinâmicas */
-            padding: max(16px, env(safe-area-inset-top, 16px)) max(16px, env(safe-area-inset-right, 16px)) max(16px, env(safe-area-inset-bottom, 16px)) max(16px, env(safe-area-inset-left, 16px));
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #E8D5FF 0%, #D4BFFF 100%);
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: max(16px, env(safe-area-inset-top, 16px)) max(16px, env(safe-area-inset-right, 16px)) max(16px, env(safe-area-inset-bottom, 16px)) max(16px, env(safe-area-inset-left, 16px));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .container {
-            background: #FFFFFF;
-            border-radius: 32px;
-            padding: 0;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            min-height: calc(100vh - 32px);
-            min-height: calc(100dvh - 32px);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+    .container {
+      background: #FFFFFF;
+      border-radius: 32px;
+      padding: 0;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      min-height: calc(100vh - 32px);
+      min-height: calc(100dvh - 32px);
+      display: flex;
+      flex-direction: column;
+    }
 
-        .header {
-            padding: 24px 24px 32px 24px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+    .header {
+      padding: 24px 24px 32px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
 
-        .menu-icon {
-            width: 24px;
-            height: 24px;
-            color: #666;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
+    .menu-icon {
+      width: 24px;
+      height: 24px;
+      color: #666;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
 
-        .menu-icon:hover {
-            color: #8B5CF6;
-        }
+    .menu-icon:hover {
+      color: #8B5CF6;
+    }
 
-        .header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #8B5CF6;
-            margin: 0;
-        }
+    .header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #8B5CF6;
+    }
 
-        .content {
-            padding: 0 24px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+    .content {
+      padding: 0 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .welcome-text {
-            font-size: 16px;
-            color: #9CA3AF;
-            margin-bottom: 8px;
-            font-weight: 400;
-        }
+    .welcome-text {
+      font-size: 16px;
+      color: #9CA3AF;
+      margin-bottom: 8px;
+      font-weight: 400;
+    }
 
-        .main-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1F2937;
-            margin-bottom: 32px;
-            line-height: 1.2;
-        }
+    .main-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1F2937;
+      margin-bottom: 32px;
+    }
 
-        .series-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            flex: 1;
-        }
+    .series-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
 
-        .series-card {
-            border-radius: 20px;
-            padding: 32px 24px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            min-height: 120px;
-        }
+    .series-card {
+      border-radius: 20px;
+      padding: 8px 0;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 120px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.6s ease forwards;
+      width: 100%;
+    }
 
-        .series-card img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-        }
+    .series-card:nth-child(1) { animation-delay: 0.1s; }
+    .series-card:nth-child(2) { animation-delay: 0.2s; }
+    .series-card:nth-child(3) { animation-delay: 0.3s; }
 
-        .series-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
-        }
+    .series-card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
 
-        .series-card:active {
-            transform: translateY(-2px);
-        }
+    .series-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+    }
 
-        .primeira-serie {
-            padding: 0;
-            display: block;
-        }
+    .series-card:active {
+      transform: translateY(-2px);
+    }
 
-        .primeira-serie img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+    .primeira-serie img,
+    .segunda-serie img,
+    .terceira-serie img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-        .segunda-serie {
-            padding: 0;
-            display: block;
-        }
+    .series-text {
+      font-size: 32px;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        .segunda-serie img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+    .book-icon {
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
 
-        .terceira-serie {
-            padding: 0;
-            display: block;
-        }
+    .bottom-nav {
+      padding: 4px;
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      margin-top: auto;
+      background-color: #F5EFFB;
+    }
 
-        .terceira-serie img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+    .nav-item {
+      flex: 1;
+      max-width: 120px;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
 
-        .series-text {
-            font-size: 32px;
-            font-weight: 700;
-            line-height: 1.1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+    .nav-item:hover {
+      transform: translateY(-2px);
+    }
 
-        .book-icon {
-            width: 80px;
-            height: 80px;
-            opacity: 0.9;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-        }
+    .nav-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-        .bottom-nav {
-            padding: 24px;
-            display: flex;
-            justify-content: center;
-            gap: 80px;
-            margin-top: auto;
-            background-color: #F5EFFB;
-        }
+    
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .nav-item:hover {
-            transform: translateY(-2px);
-        }
+    .series-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s ease;
+    }
 
-        .nav-icon {
-            width: 63px;
-            height: 63px;
-            color: #8B5CF6;
-        }
+    .series-card:hover::before {
+      left: 100%;
+    }
 
-        .nav-icon.active {
-            color: #6D28D9;
-        }
+    @media (max-width: 480px) {
+      body {
+        padding: max(12px, env(safe-area-inset-top, 12px)) max(12px, env(safe-area-inset-right, 12px)) max(12px, env(safe-area-inset-bottom, 12px)) max(12px, env(safe-area-inset-left, 12px));
+      }
 
-        /* Animações de entrada */
-        .series-card {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideUp 0.6s ease forwards;
-        }
+      .container {
+        border-radius: 24px;
+        min-height: calc(100dvh - 24px);
+        max-width: none;
+      }
 
-        .series-card:nth-child(1) { animation-delay: 0.1s; }
-        .series-card:nth-child(2) { animation-delay: 0.2s; }
-        .series-card:nth-child(3) { animation-delay: 0.3s; }
+      .header { padding: 20px; }
+      .content { padding: 0 20px; }
+      .main-title { font-size: 24px; }
+      .series-text { font-size: 28px; }
+      .book-icon { width: 64px; height: 64px; }
+    }
 
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    @media (max-width: 360px) {
+      body {
+        padding: max(8px, env(safe-area-inset-top, 8px)) max(8px, env(safe-area-inset-right, 8px)) max(8px, env(safe-area-inset-bottom, 8px)) max(8px, env(safe-area-inset-left, 8px));
+      }
 
-        /* Efeito de brilho nos cards */
-        .series-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s ease;
-        }
+      .container {
+        min-height: calc(100dvh - 16px);
+        border-radius: 20px;
+      }
 
-        .series-card:hover::before {
-            left: 100%;
-        }
+      .header { padding: 16px 16px 20px 16px; }
+      .content { padding: 0 16px; }
+      .main-title { font-size: 22px; margin-bottom: 24px; }
+      .series-card { padding: 24px 20px; min-height: 100px; }
+      .series-text { font-size: 24px; }
+      .book-icon { width: 56px; height: 56px; }
+    }
 
-        @media (max-width: 480px) {
-            body {
-                padding: max(12px, env(safe-area-inset-top, 12px)) max(12px, env(safe-area-inset-right, 12px)) max(12px, env(safe-area-inset-bottom, 12px)) max(12px, env(safe-area-inset-left, 12px));
-            }
-            
-            .container {
-                border-radius: 24px;
-                min-height: calc(100vh - 24px);
-                min-height: calc(100dvh - 24px);
-                max-width: none;
-                width: 100%;
-            }
-            
-            .header {
-                padding: 20px 20px 24px 20px;
-            }
-            
-            .content {
-                padding: 0 20px;
-            }
-            
-            .main-title {
-                font-size: 24px;
-            }
-            
-            .series-text {
-                font-size: 28px;
-            }
-            
-            .book-icon {
-                width: 64px;
-                height: 64px;
-            }
-        }
-
-        /* Ajustes específicos para telas muito pequenas */
-        @media (max-width: 360px) {
-            body {
-                padding: max(8px, env(safe-area-inset-top, 8px)) max(8px, env(safe-area-inset-right, 8px)) max(8px, env(safe-area-inset-bottom, 8px)) max(8px, env(safe-area-inset-left, 8px));
-            }
-            
-            .container {
-                min-height: calc(100vh - 16px);
-                min-height: calc(100dvh - 16px);
-                border-radius: 20px;
-            }
-            
-            .header {
-                padding: 16px 16px 20px 16px;
-            }
-            
-            .content {
-                padding: 0 16px;
-            }
-            
-            .main-title {
-                font-size: 22px;
-                margin-bottom: 24px;
-            }
-            
-            .series-card {
-                padding: 24px 20px;
-                min-height: 100px;
-            }
-            
-            .series-text {
-                font-size: 24px;
-            }
-            
-            .book-icon {
-                width: 56px;
-                height: 56px;
-            }
-        }
-
-        /* Ajustes para telas muito altas (proporção de tela alongada) */
-        @media (min-aspect-ratio: 1/2) and (max-width: 480px) {
-            .container {
-                min-height: calc(100vh - max(32px, env(safe-area-inset-top, 16px) + env(safe-area-inset-bottom, 16px)));
-                min-height: calc(100dvh - max(32px, env(safe-area-inset-top, 16px) + env(safe-area-inset-bottom, 16px)));
-            }
-        }
-    </style>
+    @media (min-aspect-ratio: 1/2) and (max-width: 480px) {
+      .container {
+        min-height: calc(100dvh - max(32px, env(safe-area-inset-top, 16px) + env(safe-area-inset-bottom, 16px)));
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="window.location.href='index.html'">
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <line x1="3" y1="12" x2="21" y2="12"/>
-                <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-            <h1>Início</h1>
-        </div>
-        
-        <div class="content">
-            <p class="welcome-text">Seja bem-vindo!</p>
-            <h2 class="main-title">Selecione a sua série</h2>
-            
-            <div class="series-container">
-                <div class="series-card primeira-serie" onclick="selectSeries('primeira')">
-                    <img src="btnprimeira.png" alt="Primeira Série">
-                </div>
-                
-                <div class="series-card segunda-serie" onclick="selectSeries('segunda')">
-                    <img src="btnsegunda.png" alt="Segunda Série">
-                </div>
-                
-                <div class="series-card terceira-serie" onclick="selectSeries('terceira')">
-                    <img src="btnterceira.png" alt="Terceira Série">
-                </div>
-            </div>
-        </div>
-        
-        <div class="bottom-nav">
-            <div class="nav-item" onclick="window.location.href='FaltaQuanto.html'">
-                <img src="iconefalta.png" alt="Faltas" class="nav-icon active" style="width: 63px; height: 63px;">
-            </div>
-            
-            <div class="nav-item" onclick="window.location.href='Recuperacao.html'">
-                <img src="bad-grades.png" alt="Notas" class="nav-icon" style="width: 63px; height: 63px;">
-            </div>
-        </div>
+  <div class="container">
+    <div class="header">
+      <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="window.location.href='index.html'">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <h1>Início</h1>
     </div>
 
-    <script>
-        function selectSeries(serie) {
-            // Adicionar feedback visual
-            const cards = document.querySelectorAll('.series-card');
-            cards.forEach(card => {
-                card.style.transform = 'scale(0.95)';
-                card.style.opacity = '0.7';
-            });
-            
-            // Restaurar após um breve momento
-            setTimeout(() => {
-                cards.forEach(card => {
-                    card.style.transform = '';
-                    card.style.opacity = '';
-                });
-                
-                // Navegação direta para a página da série
-                if (serie === 'primeira') {
-                    window.location.href = 'PrimeiraSerie.html';
-                } else if (serie === 'segunda') {
-                    window.location.href = 'SegundaSerie.html';
-                } else if (serie === 'terceira') {
-                    window.location.href = 'TerceiraSerie.html';
-                }
-            }, 150);
-        }
-        
-        // Animação de entrada da página
-        window.addEventListener('load', function() {
-            const welcomeText = document.querySelector('.welcome-text');
-            const mainTitle = document.querySelector('.main-title');
-            
-            welcomeText.style.opacity = '0';
-            welcomeText.style.transform = 'translateY(10px)';
-            welcomeText.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            
-            mainTitle.style.opacity = '0';
-            mainTitle.style.transform = 'translateY(10px)';
-            mainTitle.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            
-            setTimeout(() => {
-                welcomeText.style.opacity = '1';
-                welcomeText.style.transform = 'translateY(0)';
-            }, 200);
-            
-            setTimeout(() => {
-                mainTitle.style.opacity = '1';
-                mainTitle.style.transform = 'translateY(0)';
-            }, 400);
+    <div class="content">
+      <p class="welcome-text">Seja bem-vindo!</p>
+      <h2 class="main-title">Selecione a sua série</h2>
+
+      <div class="series-container">
+        <div class="series-card primeira-serie" onclick="selectSeries('primeira')">
+          <img src="btnprimeira.png" alt="Primeira Série" />
+        </div>
+        <div class="series-card segunda-serie" onclick="selectSeries('segunda')">
+          <img src="btnsegunda.png" alt="Segunda Série" />
+        </div>
+        <div class="series-card terceira-serie" onclick="selectSeries('terceira')">
+          <img src="btnterceira.png" alt="Terceira Série" />
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="window.location.href='FaltaQuanto.html'">
+        <img src="iconefalta.png" alt="Faltas" class="nav-icon active" />
+      </div>
+      <div class="nav-item" onclick="window.location.href='Recuperacao.html'">
+        <img src="bad-grades.png" alt="Notas" class="nav-icon" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function selectSeries(serie) {
+      const cards = document.querySelectorAll('.series-card');
+      cards.forEach(card => {
+        card.style.transform = 'scale(0.95)';
+        card.style.opacity = '0.7';
+      });
+
+      setTimeout(() => {
+        cards.forEach(card => {
+          card.style.transform = '';
+          card.style.opacity = '';
         });
-        
-        // Efeito paralax sutil no scroll
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const cards = document.querySelectorAll('.series-card');
-            
-            cards.forEach((card, index) => {
-                const speed = 0.1 + (index * 0.05);
-                card.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-    </script>
+
+        if (serie === 'primeira') window.location.href = 'PrimeiraSerie.html';
+        if (serie === 'segunda') window.location.href = 'SegundaSerie.html';
+        if (serie === 'terceira') window.location.href = 'TerceiraSerie.html';
+      }, 150);
+    }
+
+    window.addEventListener('load', () => {
+      const welcomeText = document.querySelector('.welcome-text');
+      const mainTitle = document.querySelector('.main-title');
+
+      welcomeText.style.opacity = '0';
+      welcomeText.style.transform = 'translateY(10px)';
+      welcomeText.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+      mainTitle.style.opacity = '0';
+      mainTitle.style.transform = 'translateY(10px)';
+      mainTitle.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+      setTimeout(() => {
+        welcomeText.style.opacity = '1';
+        welcomeText.style.transform = 'translateY(0)';
+      }, 200);
+
+      setTimeout(() => {
+        mainTitle.style.opacity = '1';
+        mainTitle.style.transform = 'translateY(0)';
+      }, 400);
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const cards = document.querySelectorAll('.series-card');
+      cards.forEach((card, index) => {
+        const speed = 0.1 + (index * 0.05);
+        card.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+  </script>
 </body>
 </html>
