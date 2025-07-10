@@ -2,7 +2,7 @@
   "name": "Média Fácil",
   "short_name": "Média Fácil",
   "description": "Aplicativo para calcular notas escolares",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#E8D5FF",
   "theme_color": "#D4BFFF",
